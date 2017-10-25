@@ -22,11 +22,10 @@ import { Component } from '@angular/core';
           <tr *ngFor="let currentKeg of kegs">
             <td>{{currentKeg.name}}</td>
             <td>{{currentKeg.brand}}</td>
-            <td>{{currentKeg.price}}</td>
-            <td [class]="alcoholContentColor(currentKeg)">{{currentKeg.alcoholContent}}</td>
+            <td>$ {{currentKeg.price}}</td>
+            <td [class]="alcoholContentColor(currentKeg)">{{currentKeg.alcoholContent}} %</td>
             <td>{{currentKeg.pintsLeft}}</td>
-            <td><button (click)="editKeg()" class="waves-effect waves-light btn deep-purple" type="submit" name="action"><i class="material-icons right">credit_card</i>Buy a Pint!</button></td>
-
+            <td><button (click)="editKeg()" class="waves-effect waves-light btn deep-purple" type="submit" name="action"><i class="material-icons">credit_card</i></button></td>
           </tr>
         </tbody>
       </table>

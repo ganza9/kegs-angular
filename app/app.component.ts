@@ -23,9 +23,9 @@ import { Component } from '@angular/core';
             <td>{{currentKeg.name}}</td>
             <td>{{currentKeg.brand}}</td>
             <td>{{currentKeg.price}}</td>
-            <td>{{currentKeg.alcoholContent}}</td>
+            <td [class]="alcoholContentColor(currentKeg)">{{currentKeg.alcoholContent}}</td>
             <td>{{currentKeg.pintsLeft}}</td>
-            <td><button (click)="editTask()" class="waves-effect waves-light btn amber accent-4" type="submit" name="action"><i class="material-icons right">credit_card</i>Buy a Pint!</button></td>
+            <td><button (click)="editKeg()" class="waves-effect waves-light btn deep-purple" type="submit" name="action"><i class="material-icons right">credit_card</i>Buy a Pint!</button></td>
 
           </tr>
         </tbody>
@@ -37,10 +37,23 @@ import { Component } from '@angular/core';
 
 export class AppComponent {
   kegs: Keg[] = [
-    new Keg("Carina Peach Sour", "Ecliptic", 5, 8, 124),
+    new Keg("Carina Peach Sour", "Ecliptic", 5, 2, 124),
     new Keg("Torpedo", "Sierra Nevada", 4, 6.7, 124),
-    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 5, 124)
+    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 15, 124)
   ];
+
+  editKeg(){
+  }
+
+  alcoholContentColor(currentKeg){
+    if (currentKeg.alcoholContent <= 4){
+      return "green lighten-1";
+    } else if (currentKeg.alcoholContent <= 8){
+      return "amber";
+    } else {
+      return "deep-orange accent-3";
+    }
+  }
 }
 
 export class Keg {

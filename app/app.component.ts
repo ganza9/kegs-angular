@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Keg } from './keg.model';
 
 
 @Component({
@@ -6,55 +7,39 @@ import { Component } from '@angular/core';
   template: `
   <div class="container">
     <h1>Raging Keggers Bro</h1>
-      <table class="bordered">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Price</th>
-            <th>Alcohol Content</th>
-            <th>Pints Left</th>
-            <th>Purchase</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          <tr *ngFor="let currentKeg of kegs">
-            <td>{{currentKeg.name}}</td>
-            <td>{{currentKeg.brand}}</td>
-            <td>$ {{currentKeg.price}}</td>
-            <td [class]="alcoholContentColor(currentKeg)">{{currentKeg.alcoholContent}} %</td>
-            <td>{{currentKeg.pintsLeft}}</td>
-            <td><button (click)="editKeg()" class="waves-effect waves-light btn deep-purple" type="submit" name="action"><i class="material-icons">credit_card</i></button></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
+    <keg-list [childKegList]="masterKegList" (clickSender)="editKeg($event)"></keg-list>
+    <edit-keg [childSelectedKeg]="selectedKeg" (doneButtonClickedSender)="finishedEditing()"></edit-keg>
+    <new-keg (newKegSender)="addKeg($event)"></new-keg>
+  </div>
   `
 })
 
 export class AppComponent {
-  kegs: Keg[] = [
+
+  masterKegList: Keg[] = [
     new Keg("Carina Peach Sour", "Ecliptic", 5, 2, 124),
     new Keg("Torpedo", "Sierra Nevada", 4, 6.7, 124),
-    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 15, 124)
-  ];
+    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 15, 124)];
+    selectedKeg= null;
 
-  editKeg(){
+  editKeg(clickedKeg){
+    this.selectedKeg = clickedKeg;
   }
 
-  alcoholContentColor(currentKeg){
-    if (currentKeg.alcoholContent <= 4){
-      return "green lighten-1";
-    } else if (currentKeg.alcoholContent <= 8){
-      return "amber";
+  finishedEditing() {
+    this.selectedKeg = null;
+  }
+
+  addKeg(newKegFromChild: Keg) {
+    this.masterKegList.push(newKegFromChild);
+  }
+
+  isTapped(clickedKeg: Keg){
+    if(clickedKeg.tapped === true){
+      alert("This keg is tapped!");
     } else {
-      return "deep-orange accent-3";
+      alert("This keg is not tapped. Get to drinking bro.");
     }
   }
-}
 
-export class Keg {
-  constructor(public name: string, public brand: string, public price: number, public alcoholContent: number, public pintsLeft: number) { }
 }

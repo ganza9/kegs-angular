@@ -14,8 +14,8 @@ import { Keg } from './keg.model';
     <table class="bordered">
       <thead>
         <tr>
-          <th>Name</th>
-          <th>Brand</th>
+          <th>Beer</th>
+          <th>Brewery</th>
           <th>Price Per Pint</th>
           <th>Alcohol Content</th>
           <th>Pints Left</th>
@@ -26,7 +26,7 @@ import { Keg } from './keg.model';
       </thead>
 
       <tbody>
-        <tr *ngFor="let currentKeg of childKegList | completeness:filterByCompleteness">
+        <tr (click)="isTapped(currentKeg)" *ngFor="let currentKeg of childKegList | completeness:filterByCompleteness">
           <td>{{currentKeg.name}}</td>
           <td>{{currentKeg.brand}}</td>
           <td>$ {{currentKeg.price}}</td>
@@ -35,7 +35,7 @@ import { Keg } from './keg.model';
           <td><button class="waves-effect waves-light btn deep-purple" type="submit" name="action"><i class="material-icons">credit_card</i></button></td>
           <td><button (click)="editButtonHasBeenClicked(currentKeg)" class="waves-effect waves-light btn grey" type="submit" name="action"><i class="material-icons">edit</i></button></td>
           <td><input *ngIf="currentKeg.tapped === true" type="checkbox" checked (click)="toggleTapped(currentKeg, false)"/>
-          <input *ngIf="currentKeg.tapped === false" type="checkbox" (click)="toggleTapped(currentKeg, true)"/>
+          <input *ngIf="currentKeg.tapped === false" type="checkbox" class="filled-in" id="filled-in-box" (click)="toggleTapped(currentKeg, true)"/></td>
         </tr>
       </tbody>
     </table>
@@ -45,12 +45,11 @@ import { Keg } from './keg.model';
 export class KegListComponent {
   @Input() childKegList: Keg[];
   @Output() clickSender = new EventEmitter();
-  filterByCompletness: string = "partialKegs";
+  filterByCompleteness: string = "partialKegs";
 
   editButtonHasBeenClicked(kegToEdit: Keg) {
     this.clickSender.emit(kegToEdit);
   }
-
 
   alcoholContentColor(currentKeg){
     if (currentKeg.alcoholContent <= 4){
@@ -62,8 +61,16 @@ export class KegListComponent {
     }
   }
 
+  isTapped(clickedKeg: Keg){
+    if(clickedKeg.tapped === true){
+      alert("This keg is tapped!");
+    } else {
+      alert("This keg is not tapped. Get to drinking bro.");
+    }
+  }
+
   onChange(optionFromMenu) {
-    this.filterByCompletness = optionFromMenu;
+    this.filterByCompleteness = optionFromMenu;
   }
 
   toggleTapped(clickedKeg: Keg, setCompleteness: boolean) {

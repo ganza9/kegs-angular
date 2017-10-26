@@ -7,10 +7,10 @@ import { Keg } from './keg.model';
   template: `
     <h1>New Keg</h1>
     <div>
-      <label>Enter Keg Name:</label>
+      <label>Enter Beer Name:</label>
       <input #newName>
       <br>
-      <label>Enter Keg Brand:</label>
+      <label>Enter Brewery:</label>
       <input #newBrand>
       <br>
       <label>Enter Pint Price:</label>

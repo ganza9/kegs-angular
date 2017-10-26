@@ -15,12 +15,13 @@ import { Keg } from './keg.model';
 })
 
 export class AppComponent {
+  selectedKeg= null;
 
   masterKegList: Keg[] = [
     new Keg("Carina Peach Sour", "Ecliptic", 5, 2, 124),
     new Keg("Torpedo", "Sierra Nevada", 4, 6.7, 124),
-    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 15, 124)];
-    selectedKeg= null;
+    new Keg("Grapefruit Sculpin", "Ballast Point", 7, 15, 124)
+  ];
 
   editKeg(clickedKeg){
     this.selectedKeg = clickedKeg;
@@ -32,14 +33,6 @@ export class AppComponent {
 
   addKeg(newKegFromChild: Keg) {
     this.masterKegList.push(newKegFromChild);
-  }
-
-  isTapped(clickedKeg: Keg){
-    if(clickedKeg.tapped === true){
-      alert("This keg is tapped!");
-    } else {
-      alert("This keg is not tapped. Get to drinking bro.");
-    }
   }
 
 }
